@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="provyloc"></h1>
+    <p id="aqui"></p>
+
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this);
+            }
+        };
+        xhttp.open("GET", "aemet.xml", true);
+        xhttp.send();
+
+        function myFunction(xml) {
+            var xmlDoc = xml.responseXML;
+            document.getElementById("provyloc").innerHTML = 
+            xmlDoc.getElementsByTagName("nombre")[0].textContent + ', ' + xmlDoc.getElementsByTagName("provincia")[0].textContent;
+
+            var predicciones = xmlDoc.getElementsByTagName("prediccion")[0];
+            console.log(predicciones)
+            var i = 1;
+            var dia = predicciones.childNodes[i];
+            while(i<14){
+                if (dia.nodeType == 1){
+                    console.log(dia);
+                                   
+                }
+                dia = dia.nextSibling;
+                i++
+            }
+        }
+    </script>
+</body>
+</html>
